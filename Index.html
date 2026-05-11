@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuestionario — Comercio Electrónico</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --surface: #16161a;
+    --surface2: #1e1e24;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.15);
+    --accent: #a78bfa;
+    --accent2: #7c3aed;
+    --accent-glow: rgba(167,139,250,0.15);
+    --green: #4ade80;
+    --green-bg: rgba(74,222,128,0.1);
+    --green-border: rgba(74,222,128,0.3);
+    --red: #f87171;
+    --red-bg: rgba(248,113,113,0.1);
+    --red-border: rgba(248,113,113,0.3);
+    --text: #f1f0ff;
+    --text2: #a09cb8;
+    --text3: #635f7a;
+    --radius: 12px;
+    --radius-lg: 18px;
+  }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: ‘DM Sans’, sans-serif;
+background: var(–bg);
+color: var(–text);
+min-height: 100vh;
+line-height: 1.6;
+}
+
+/* Background pattern */
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background:
+radial-gradient(ellipse 80% 50% at 20% -10%, rgba(124,58,237,0.18) 0%, transparent 60%),
+radial-gradient(ellipse 60% 40% at 80% 110%, rgba(167,139,250,0.1) 0%, transparent 50%);
+pointer-events: none;
+z-index: 0;
+}
+
+.container {
+max-width: 720px;
+margin: 0 auto;
+padding: 2rem 1.25rem 4rem;
+position: relative;
+z-index: 1;
+}
+
+/* Header */
+.site-header {
+text-align: center;
+margin-bottom: 2.5rem;
+padding-top: 1rem;
+}
+
+.badge {
+display: inline-flex;
+align-items: center;
+gap: 6px;
+background: var(–accent-glow);
+border: 1px solid rgba(167,139,250,0.3);
+color: var(–accent);
+font-size: 11px;
+font-weight: 500;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+padding: 5px 14px;
+border-radius: 99px;
+margin-bottom: 1rem;
+}
+
+.site-header h1 {
+font-family: ‘Syne’, sans-serif;
+font-size: clamp(26px, 5vw, 38px);
+font-weight: 800;
+color: var(–text);
+letter-spacing: -0.02em;
+line-height: 1.15;
+margin-bottom: 0.5rem;
+}
+
+.site-header h1 span {
+background: linear-gradient(135deg, #a78bfa, #c4b5fd);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+.site-header p {
+color: var(–text2);
+font-size: 15px;
+}
+
+/* Stats bar */
+.stats-grid {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 10px;
+margin-bottom: 1.25rem;
+}
+
+.stat-card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: var(–radius);
+padding: 12px;
+text-align: center;
+}
+
+.stat-card .num {
+font-family: ‘Syne’, sans-serif;
+font-size: 22px;
+font-weight: 700;
+color: var(–text);
+display: block;
+line-height: 1;
+margin-bottom: 4px;
+}
+
+.stat-card .num.green { color: var(–green); }
+.stat-card .num.red { color: var(–red); }
+.stat-card .num.accent { color: var(–accent); }
+
+.stat-card label {
+font-size: 11px;
+color: var(–text3);
+text-transform: uppercase;
+letter-spacing: 0.05em;
+}
+
+/* Progress bar */
+.progress-wrap {
+margin-bottom: 1.5rem;
+}
+
+.progress-info {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 6px;
+}
+
+.progress-info span {
+font-size: 12px;
+color: var(–text3);
+}
+
+.progress-track {
+height: 4px;
+background: var(–surface2);
+border-radius: 99px;
+overflow: hidden;
+}
+
+.progress-fill {
+height: 100%;
+background: linear-gradient(90deg, #7c3aed, #a78bfa);
+border-radius: 99px;
+transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Question card */
+.question-card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: var(–radius-lg);
+padding: 1.5rem;
+margin-bottom: 1rem;
+animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(8px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.q-meta {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 1rem;
+flex-wrap: wrap;
+gap: 8px;
+}
+
+.topic-pill {
+background: var(–accent-glow);
+border: 1px solid rgba(167,139,250,0.25);
+color: var(–accent);
+font-size: 11px;
+font-weight: 500;
+padding: 3px 10px;
+border-radius: 99px;
+letter-spacing: 0.04em;
+}
+
+.q-counter {
+font-size: 12px;
+color: var(–text3);
+font-family: ‘Syne’, sans-serif;
+}
+
+.q-text {
+font-size: 16px;
+font-weight: 500;
+color: var(–text);
+line-height: 1.55;
+margin-bottom: 1.25rem;
+}
+
+/* Options */
+.options {
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+
+.opt-btn {
+display: flex;
+align-items: flex-start;
+gap: 12px;
+width: 100%;
+text-align: left;
+padding: 12px 14px;
+background: var(–surface2);
+border: 1px solid var(–border);
+border-radius: var(–radius);
+cursor: pointer;
+transition: all 0.18s ease;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 14px;
+color: var(–text2);
+line-height: 1.5;
+}
+
+.opt-btn:hover:not(:disabled) {
+background: var(–surface);
+border-color: var(–border2);
+color: var(–text);
+}
+
+.opt-btn:disabled { cursor: default; }
+
+.opt-btn.correct {
+background: var(–green-bg);
+border-color: var(–green-border);
+color: var(–green);
+}
+
+.opt-btn.wrong {
+background: var(–red-bg);
+border-color: var(–red-border);
+color: var(–red);
+}
+
+.opt-btn.reveal {
+background: var(–green-bg);
+border-color: var(–green-border);
+color: var(–green);
+}
+
+.opt-letter {
+font-family: ‘Syne’, sans-serif;
+font-size: 11px;
+font-weight: 700;
+min-width: 22px;
+height: 22px;
+border-radius: 6px;
+background: rgba(255,255,255,0.06);
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
+margin-top: 1px;
+letter-spacing: 0.04em;
+}
+
+.opt-btn.correct .opt-letter,
+.opt-btn.reveal .opt-letter {
+background: rgba(74,222,128,0.2);
+}
+
+.opt-btn.wrong .opt-letter {
+background: rgba(248,113,113,0.2);
+}
+
+/* Feedback */
+.feedback {
+margin-top: 1rem;
+padding: 12px 14px;
+border-radius: var(–radius);
+font-size: 13.5px;
+line-height: 1.55;
+display: flex;
+gap: 10px;
+align-items: flex-start;
+animation: fadeIn 0.25s ease;
+}
+
+.feedback.ok {
+background: var(–green-bg);
+border: 1px solid var(–green-border);
+color: #86efac;
+}
+
+.feedback.fail {
+background: var(–red-bg);
+border: 1px solid var(–red-border);
+color: #fca5a5;
+}
+
+.feedback-icon {
+font-size: 16px;
+flex-shrink: 0;
+margin-top: 1px;
+}
+
+/* Navigation */
+.nav-row {
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
+}
+
+.btn {
+flex: 1;
+min-width: 120px;
+padding: 12px 18px;
+border-radius: var(–radius);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 14px;
+font-weight: 500;
+cursor: pointer;
+transition: all 0.18s ease;
+border: 1px solid var(–border2);
+background: transparent;
+color: var(–text2);
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 6px;
+}
+
+.btn:hover {
+background: var(–surface2);
+color: var(–text);
+}
+
+.btn.primary {
+background: var(–accent2);
+border-color: var(–accent2);
+color: #fff;
+}
+
+.btn.primary:hover {
+background: #6d28d9;
+border-color: #6d28d9;
+}
+
+.btn svg {
+width: 16px;
+height: 16px;
+stroke: currentColor;
+fill: none;
+stroke-width: 2;
+stroke-linecap: round;
+stroke-linejoin: round;
+flex-shrink: 0;
+}
+
+/* Results screen */
+.results-wrap {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: var(–radius-lg);
+padding: 2.5rem 1.5rem;
+text-align: center;
+animation: fadeIn 0.4s ease;
+}
+
+.score-ring {
+width: 130px;
+height: 130px;
+margin: 0 auto 1.5rem;
+position: relative;
+}
+
+.score-ring svg {
+transform: rotate(-90deg);
+}
+
+.score-ring .ring-bg { stroke: var(–surface2); }
+.score-ring .ring-fill { stroke: url(#ring-grad); stroke-linecap: round; transition: stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1); }
+
+.score-text {
+position: absolute;
+inset: 0;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.score-pct {
+font-family: ‘Syne’, sans-serif;
+font-size: 28px;
+font-weight: 800;
+color: var(–text);
+line-height: 1;
+}
+
+.score-sub {
+font-size: 12px;
+color: var(–text3);
+margin-top: 2px;
+}
+
+.results-title {
+font-family: ‘Syne’, sans-serif;
+font-size: 22px;
+font-weight: 700;
+margin-bottom: 6px;
+color: var(–text);
+}
+
+.results-msg {
+color: var(–text2);
+font-size: 14px;
+margin-bottom: 1.5rem;
+}
+
+.results-breakdown {
+display: flex;
+justify-content: center;
+gap: 24px;
+margin-bottom: 1.5rem;
+}
+
+.rb-item {
+font-size: 13px;
+}
+
+.rb-item strong {
+font-family: ‘Syne’, sans-serif;
+font-size: 20px;
+display: block;
+font-weight: 700;
+}
+
+.rb-item.g strong { color: var(–green); }
+.rb-item.r strong { color: var(–red); }
+
+.results-nav {
+display: flex;
+gap: 10px;
+justify-content: center;
+flex-wrap: wrap;
+max-width: 380px;
+margin: 0 auto;
+}
+
+/* Topic nav pills */
+.topic-nav {
+display: flex;
+gap: 6px;
+flex-wrap: wrap;
+margin-bottom: 1.25rem;
+}
+
+.topic-pill-btn {
+font-size: 11px;
+padding: 4px 10px;
+border-radius: 99px;
+border: 1px solid var(–border);
+background: transparent;
+color: var(–text3);
+cursor: pointer;
+font-family: ‘DM Sans’, sans-serif;
+transition: all 0.15s;
+}
+
+.topic-pill-btn:hover,
+.topic-pill-btn.active {
+background: var(–accent-glow);
+border-color: rgba(167,139,250,0.3);
+color: var(–accent);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+.stats-grid { grid-template-columns: repeat(2, 1fr); }
+.site-header h1 { font-size: 24px; }
+}
+</style>
+
+</head>
+<body>
+<div class="container">
+
+  <header class="site-header">
+    <div class="badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      Carrera de Comercio Electrónico
+    </div>
+    <h1>Cuestionario de<br><span>E-Commerce</span></h1>
+    <p>50 preguntas — Tutorías 1 al 7</p>
+  </header>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="num accent" id="st-cur">1</span>
+      <label>Pregunta</label>
+    </div>
+    <div class="stat-card">
+      <span class="num green" id="st-ok">0</span>
+      <label>Correctas</label>
+    </div>
+    <div class="stat-card">
+      <span class="num red" id="st-fail">0</span>
+      <label>Incorrectas</label>
+    </div>
+    <div class="stat-card">
+      <span class="num accent" id="st-pct">—</span>
+      <label>Aciertos</label>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-info">
+      <span id="prog-label">Pregunta 1 de 50</span>
+      <span id="prog-pct">2%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="prog-fill" style="width:2%"></div>
+    </div>
+  </div>
+
+  <div id="quiz-body"></div>
+
+</div>
+
+<script>
+const Q=[
+{t:"Conceptos base",q:"¿Cómo se define el comercio electrónico (e-commerce)?",o:["Venta exclusiva de productos físicos en tiendas","Compra y venta de productos o servicios a través de internet","Sistema de facturación electrónica entre empresas","Plataforma de logística y distribución"],a:1,e:"El e-commerce consiste en la compra y venta de productos o servicios a través de internet, incluyendo redes sociales y páginas web."},
+{t:"Análisis regional",q:"Según eMarketer 2021, ¿qué región tuvo el mayor crecimiento en ventas de e-commerce retail?",o:["Asia-Pacífico (17.2%)","Europa Occidental (11.3%)","Latinoamérica (25.6%)","Norteamérica (17.5%)"],a:2,e:"Latinoamérica lideró el crecimiento global con 25.6%, superando a todas las demás regiones del mundo."},
+{t:"Ecuador",q:"¿En qué posición se ubica Ecuador en penetración de internet entre países de Sudamérica?",o:["Primera posición","Segunda posición","Tercera posición","Cuarta posición"],a:3,e:"Ecuador ocupa la cuarta posición en penetración de internet en Sudamérica, con un 80% de acceso, superando el promedio regional (78%) y global (65%)."},
+{t:"Ecuador",q:"¿Cuál fue el porcentaje de penetración de internet en Ecuador en 2023?",o:["65%","72%","80%","90%"],a:2,e:"Ecuador registró un 80% de penetración de internet en 2023."},
+{t:"Ecuador",q:"¿Cuánto aumentó el porcentaje de ecuatorianos que compraron en línea entre 2022 y 2023?",o:["Del 70% al 78%","Del 78% al 81%","Del 81% al 91%","Del 65% al 80%"],a:2,e:"La frecuencia de compra en línea pasó del 81% en 2022 al 91% en 2023, creciendo 10 puntos porcentuales."},
+{t:"Ecuador",q:"¿Cuál fue el medio de pago más utilizado en compras online en Ecuador en 2023?",o:["Efectivo contra entrega","Depósito en cuenta","Tarjeta de débito","Tarjeta de crédito"],a:3,e:"La tarjeta de crédito fue el medio de pago más usado con un 42% en 2023, seguida por la tarjeta de débito (40%)."},
+{t:"Ecuador",q:"¿Qué dispositivo dominó las compras en línea en Ecuador en 2023?",o:["Computadora de escritorio","Tablet","Teléfono móvil (celular)","Televisor inteligente"],a:2,e:"El celular dominó con un 78% en 2023, reflejando la preferencia por conveniencia y accesibilidad."},
+{t:"Ecuador",q:"¿Cuál fue el canal preferido para iniciar compras desde móvil en Ecuador en 2023?",o:["Sitios web (24%)","WhatsApp (26%)","Redes sociales (32%)","Otras apps (18%)"],a:2,e:"Las redes sociales lideraron con el 32% en 2023, superando a WhatsApp (26%) y sitios web (24%)."},
+{t:"Ecuador",q:"¿Cuál fue el tipo de financiamiento más elegido al pagar con tarjeta de crédito en Ecuador?",o:["Diferido 6 o más meses","Diferido 3-6 meses","Corriente (sin diferir, 61%)","Diferido 2-3 meses"],a:2,e:"El 61% prefirió pagar de forma corriente, indicando preferencia por el pago inmediato sobre el financiamiento diferido."},
+{t:"Ecuador",q:"¿Cuál fue el ticket promedio de compras en portales nacionales en Ecuador en 2023?",o:["$50","$58","$62","$75"],a:2,e:"El ticket promedio en portales nacionales fue de $62, subiendo desde $58 el año anterior, con un incremento del 54% en transacciones."},
+{t:"Ecuador",q:"¿En qué año los portales nacionales superaron por primera vez a los internacionales en número de transacciones?",o:["2019","2021","2022","2023"],a:3,e:"En 2023 fue la primera vez desde 2019 que los portales nacionales superaron a los internacionales en número de transacciones (45.4M vs 35.9M proyectados)."},
+{t:"Ecuador",q:"¿Qué categoría de producto tuvo la mayor frecuencia de compra online en Ecuador en 2023?",o:["Ropa y calzado (85%)","Celulares (85%)","Delivery de restaurantes (94%)","Educación en línea (85%)"],a:2,e:"Delivery de restaurantes lideró con el 94%, seguido de ropa/calzado y celulares, ambos con 85%."},
+{t:"Ecuador",q:"¿Cuál fue la principal brecha en el uso de internet según nivel socioeconómico en Ecuador 2023?",o:["Los estratos bajos usan más computadoras","Los estratos altos usan un 9% más de internet que los estratos bajos","No hay ninguna diferencia","Los estratos bajos usan menos móviles"],a:1,e:"La disparidad socioeconómica mostró un +9% de uso en estratos más altos (89%) respecto a los más bajos (80%)."},
+{t:"Ecuador",q:"¿Cuál fue el monto total de transacciones de e-commerce en Ecuador en 2022?",o:["$1.679 millones","$2.570 millones","$3.863 millones","$4.500 millones"],a:2,e:"En 2022 el monto de transacciones de e-commerce fue de $3.863 millones, representando el 23% de las transacciones digitales totales."},
+{t:"UX Online",q:"¿Qué es un wireframe en el contexto de una tienda online?",o:["Un sistema de pago integrado","Esquema visual básico de la estructura y elementos de una página web","Tipo de análisis de tráfico web","Protocolo de seguridad SSL"],a:1,e:"Un wireframe es un esquema o prototipo visual que muestra la distribución de los elementos en una página sin diseño final, usado en la fase de planificación UX."},
+{t:"UX Online",q:"¿Qué es un Test A/B en e-commerce?",o:["Prueba de velocidad entre dos servidores","Comparar dos versiones de una página para ver cuál convierte mejor","Sistema de doble autenticación de pagos","Método de verificación de inventario"],a:1,e:"El Test A/B consiste en mostrar dos versiones distintas de una página a partes iguales del tráfico para identificar cuál genera mayor conversión."},
+{t:"UX Online",q:"¿Cuánto puede aumentar la conversión al implementar barra de búsqueda fija y atajos al carrito?",o:["10%","30%","60%","100%"],a:2,e:"Los sitios con barra de búsqueda fija y atajos al carrito aumentaron su conversión en un 60%."},
+{t:"UX Online",q:"¿Cuál es la relación entre fotografías de producto y conversión en una tienda online?",o:["No existe relación comprobada","Cada 5px de mejora en la foto aumenta la conversión en 0.1%","Fotos más pequeñas generan más ventas","Las fotos solo afectan la experiencia móvil"],a:1,e:"Se demostró que cada 5px que se gana en la calidad de la foto del producto, la conversión aumenta un 0.1%."},
+{t:"UX Online",q:"¿Qué porcentaje de usuarios usa la barra de búsqueda en su primera visita a una tienda online?",o:["15%","34%","68%","82%"],a:1,e:"El 34% de los usuarios utiliza la barra de búsqueda en su primera visita, y el 68% la usa como primera forma de navegación."},
+{t:"UX Online",q:"¿Qué técnica consiste en ofrecer productos complementarios al que el cliente está viendo?",o:["Upselling","Dropshipping","Cross-selling","Remarketing"],a:2,e:"El cross-selling consiste en ofrecer productos complementarios al artículo que el cliente está viendo, incrementando el ticket promedio."},
+{t:"UX Online",q:"¿Cuánto puede incrementar la conversión el uso combinado de cross-selling y upselling?",o:["5%","10%","22%","50%"],a:2,e:"El uso de cross-selling y upselling puede incrementar la conversión en un 22% y el ticket promedio en un 7%."},
+{t:"UX Online",q:"¿Cuánto aumentan los ingresos de Amazon por cada 100 milisegundos de mejora en velocidad?",o:["0.5%","1%","5%","10%"],a:1,e:"Amazon demostró que por cada 100 milisegundos de mejora en velocidad, sus ingresos incrementan en un 1%."},
+{t:"UX Online",q:"¿Por qué es clave la segmentación y captación de emails en e-commerce?",o:["Para cumplir requisitos legales de facturación","El mayor ingreso está en manejar una buena base de datos con captación continua","Solo sirve para recuperar carritos abandonados","Es una estrategia obsoleta"],a:1,e:"El mayor ingreso en e-commerce proviene de manejar una buena base de datos con captación continua y permanente de emails segmentados."},
+{t:"Omnicanalidad",q:"¿Cuál es la secuencia correcta en la evolución del digital commerce?",o:["Multichannel → Omnichannel → Single → Unified","Single channel → Multichannel → Omnichannel → Unified Commerce","Omnichannel → Multichannel → Single → Unified","Single → Omnichannel → Multichannel → Unified"],a:1,e:"La evolución es: Single channel → Multichannel → Omnichannel → Unified Commerce, aumentando el grado de integración de canales."},
+{t:"Omnicanalidad",q:"¿Cuál es la principal limitación del modelo Multichannel?",o:["Tiene menos canales de venta","Los canales no están integrados, generando experiencias desconectadas","Es más costoso de implementar","No permite ventas online"],a:1,e:"El Multichannel tiene múltiples canales pero no los conecta, generando problemas como no poder devolver en tienda lo comprado online."},
+{t:"Omnicanalidad",q:"¿Cuál es el enfoque central del Unified Commerce (Comercio Unificado)?",o:["Tener el mayor número de canales posibles","Centrarse solo en ventas online","Experiencia verdaderamente integrada con una plataforma centralizada para todos los canales","Eliminar las tiendas físicas"],a:2,e:"El Unified Commerce busca una experiencia holística centrada en el cliente, usando una única plataforma centralizada para todos los canales."},
+{t:"Omnicanalidad",q:"¿Qué porcentaje de clientes espera interacciones consistentes a través de todos los canales?",o:["60%","75%","83%","90%"],a:3,e:"El 90% de los clientes espera interacciones consistentes a través de todos los canales, según datos de SDL."},
+{t:"Omnicanalidad",q:"¿Cuánto más frecuente visitan las tiendas los consumidores omnichannel?",o:["El mismo número","10% más","23% más y mayor probabilidad de recomendar la marca","50% más"],a:2,e:"Según HBR, el 23% de los consumidores omnichannel visitan más las tiendas y es más probable que recomienden la marca."},
+{t:"Omnicanalidad",q:"¿Qué porcentaje de compradores espera comprar online y recoger en tienda (Click & Collect)?",o:["Más del 10%","Más del 25%","Más del 50%","Más del 75%"],a:2,e:"Más del 50% de los compradores espera poder comprar en línea y recoger en tienda física."},
+{t:"Omnicanalidad",q:"¿Cuál es un beneficio concreto del modelo Omnichannel para el cliente?",o:["Solo puede comprar en tiendas físicas","Puede comprar online y recoger en tienda cercana","Debe usar un solo canal para todo el proceso","Solo puede devolver productos online"],a:1,e:"Con omnichannel, el cliente puede comprar online y recoger en tienda, o devolver en cualquier canal lo comprado en otro."},
+{t:"ZMOT",q:"¿Qué significa ZMOT?",o:["Zero Margin On Trade","Zero Moment Of Truth","Zone Marketing Online Technology","Zoom Metric On Traffic"],a:1,e:"ZMOT significa Zero Moment Of Truth (Momento Cero de la Verdad), concepto de Google para describir el momento en que el consumidor investiga online antes de comprar."},
+{t:"ZMOT",q:"En el modelo de compra tradicional, ¿cuál es el primer momento de la verdad (FMOT)?",o:["Cuando el consumidor ve un anuncio","Cuando el consumidor usa el producto en casa","Cuando decide comprar en la góndola de la tienda","Cuando deja una reseña online"],a:2,e:"El FMOT ocurre en la góndola de la tienda, cuando el consumidor decide qué marca comprar frente al producto físico."},
+{t:"ZMOT",q:"¿Qué representa el segundo momento de la verdad (SMOT)?",o:["El momento de ver la publicidad","Cuando el consumidor usa el producto y queda satisfecho o decepcionado","El momento en que se hace el pago","El momento de comparar precios online"],a:1,e:"El SMOT ocurre cuando el consumidor usa el producto en su casa y evalúa si cumplió con las expectativas de la publicidad."},
+{t:"ZMOT",q:"¿Qué porcentaje de estadounidenses leen comentarios sobre productos antes de comprar?",o:["50%","60%","70%","80%"],a:2,e:"El 70% de los estadounidenses aseguran leer comentarios (reviews) sobre los productos antes de comprarlos."},
+{t:"ZMOT",q:"¿Qué porcentaje de consumidores usa su smartphone para tomar decisiones de compra mientras están en una tienda?",o:["59%","69%","79%","89%"],a:2,e:"El 79% de los consumidores afirman utilizar un teléfono inteligente para tomar decisiones cuando van de compras."},
+{t:"ZMOT",q:"En el nuevo modelo mental, ¿dónde se ubica el ZMOT en el proceso de compra?",o:["Después de la experiencia con el producto","Después de la góndola","Entre el estímulo y el primer momento de la verdad (góndola)","Es independiente del proceso"],a:2,e:"El ZMOT ocurre entre el estímulo (publicidad o recomendación) y la visita a la góndola, cuando el consumidor investiga online."},
+{t:"ZMOT",q:"¿Por qué la experiencia de un cliente (SMOT) se convierte en el ZMOT de otra persona?",o:["Porque los precios cambian según las reseñas","Porque las reseñas y experiencias compartidas online influyen en la decisión de otros consumidores","Porque los algoritmos lo determinan","Porque las marcas comparten esas experiencias en publicidad"],a:1,e:"El SMOT de un cliente se convierte en el ZMOT del próximo comprador cuando ese cliente comparte su reseña o recomendación online."},
+{t:"Métricas KPI",q:"¿Cuál es la fórmula para calcular la tasa de conversión en e-commerce?",o:["(Ventas / Clientes nuevos) x 100","(Ventas / Visitas) x 100","(Ingresos / Costos) x 100","(Clics / Impresiones) x 100"],a:1,e:"La tasa de conversión se calcula como (#Ventas / #Visitas) x 100. Es el KPI más importante de una tienda online."},
+{t:"Métricas KPI",q:"¿Qué mide la Tasa de Rebote (Bounce Rate)?",o:["El número de devoluciones de productos","El porcentaje de usuarios que salen sin interactuar con más de una página","El tiempo promedio en el sitio","La velocidad de carga de la página"],a:1,e:"La Tasa de Rebote mide el porcentaje de visitas donde el usuario entra a una página y la abandona sin interactuar con el resto del sitio."},
+{t:"Métricas KPI",q:"¿A qué categoría pertenecen velocidad de carga, peso del HOME y tasa de abandono de carrito?",o:["Métricas financieras","Métricas de marketing","Métricas de UX","Métricas de operación"],a:2,e:"Velocidad de carga, peso del HOME y tasa de abandono de carrito son KPIs de UX que miden la experiencia del usuario."},
+{t:"Métricas KPI",q:"¿Qué significa el indicador RFM en CRM analítico?",o:["Revenue, Funnel, Marketing","Recency, Frequency, Monetary value","Return, Flow, Metrics","Retention, Funnel, Monetization"],a:1,e:"RFM: Recency (cuándo fue la última compra), Frequency (con qué frecuencia compra) y Monetary value (cuánto gasta el cliente)."},
+{t:"Métricas KPI",q:"¿Qué representa el LTV en métricas de e-commerce?",o:["Landing Traffic Volume","Lifetime Value: el valor de vida del cliente","Load Time Velocity","Lead To Visit ratio"],a:1,e:"LTV (Lifetime Value) es el valor de vida del cliente, es decir, el ingreso total que genera durante toda su relación con la empresa."},
+{t:"Métricas KPI",q:"¿En cuántas áreas se divide el dashboard de indicadores de un e-commerce?",o:["3 áreas: ventas, marketing y logística","4 áreas: UX, ventas, marketing y finanzas","5 áreas: UX, Comerciales, Financieros, Marketing y Operación","6 áreas incluyendo legal y tecnología"],a:2,e:"Las 5 áreas del dashboard de indicadores son: UX, Comerciales, Financieros, Marketing y Operación."},
+{t:"Métricas KPI",q:"¿Qué mide la Tasa Orgánica de Recompra (TOR)?",o:["El porcentaje de clientes que devuelven productos","La tasa de clientes que vuelven a comprar sin inversión publicitaria","El costo por adquisición de un cliente","El margen de ganancia por producto"],a:1,e:"La TOR mide qué porcentaje de clientes vuelve a comprar de forma natural, sin necesidad de campañas pagadas."},
+{t:"Medios de pago",q:"¿Cuáles son los principales medios de pago en e-commerce en Ecuador?",o:["Solo tarjetas y PayPal","Tarjetas de crédito/débito, pago contra entrega, depósito/transferencia y pago telefónico","Solo transferencias bancarias","Solo tarjetas internacionales"],a:1,e:"Los medios de pago incluyen: tarjetas de crédito (con diferidos), tarjetas de débito, pago contra-entrega, depósito/transferencia bancaria y pago telefónico."},
+{t:"Medios de pago",q:"¿Qué ventaja diferencial tienen las tarjetas de crédito en el e-commerce ecuatoriano?",o:["Mayor seguridad contra fraudes","Opción de pagos diferidos (cuotas)","Tasas de cambio más favorables","Comisiones más bajas"],a:1,e:"Las tarjetas de crédito permiten pagos diferidos (en cuotas) en todos los bancos y marcas, facilitando compras de mayor valor."},
+{t:"Medios de pago",q:"¿Qué es el pago contra-entrega (Cash on Delivery)?",o:["El cliente paga antes del envío con transferencia","El cliente paga cuando recibe el producto en su domicilio","El cliente usa una billetera digital","El pago se realiza en puntos autorizados"],a:1,e:"El pago contra-entrega permite pagar cuando se recibe el producto, reduciendo la percepción de riesgo y aumentando la confianza."},
+{t:"Email Marketing",q:"¿Cuál es la definición de Email Marketing?",o:["Sistema de envío de facturas electrónicas","Estrategia de marketing que usa el correo electrónico para comunicarse con clientes o prospectos","Plataforma para gestionar redes sociales","Herramienta para publicidad en Google"],a:1,e:"El email marketing es una estrategia que utiliza el correo electrónico para comunicarse con clientes o prospectos, promocionar productos y construir relaciones."},
+{t:"Email Marketing",q:"¿Cuál es el principal beneficio del Marketing Automation frente al email marketing tradicional?",o:["Es más barato de implementar","Automatiza tareas de marketing como envíos, gestión de leads y seguimiento, ahorrando tiempo y dinero","Solo sirve para enviar newsletters","Requiere menos conocimiento técnico"],a:1,e:"El Marketing Automation automatiza tareas como envíos de correos, gestión de leads y seguimiento, mejorando la eficiencia y reduciendo costos."},
+{t:"Email Marketing",q:"¿Qué es la entregabilidad (deliverability) en email marketing?",o:["La velocidad de llegada de los correos","La capacidad de que los emails lleguen a la bandeja de entrada sin ser marcados como spam","El número total de correos enviados","La tasa de apertura de los emails"],a:1,e:"La entregabilidad es la capacidad de lograr que los emails lleguen efectivamente a la bandeja de entrada, evitando los filtros anti-spam."},
+{t:"Email Marketing",q:"¿Qué estrategia es fundamental para evitar la carpeta de spam en email marketing?",o:["Enviar el mayor volumen posible de correos","Trabajar una estrategia de permiso: que el destinatario haya aceptado recibir los correos","Usar palabras clave como 'gratis' en el asunto","Enviar solo imágenes, no texto"],a:1,e:"La estrategia de permiso (opt-in) es fundamental: los destinatarios deben haber aceptado recibir comunicaciones para no convertirse en spam."},
+{t:"Email Marketing",q:"¿En qué se diferencia el Marketing Automation del Email Marketing en complejidad?",o:["No hay diferencia, son lo mismo","El email marketing requiere más software","El marketing automation requiere software especializado y genera mayor eficiencia","El email marketing es más complejo técnicamente"],a:2,e:"El marketing automation requiere implementar software especializado, mayor complejidad inicial pero genera campañas más eficientes y personalizadas a escala."},
+{t:"Conceptos avanzados",q:"¿Qué proporción representó el e-commerce respecto al total de transacciones digitales en Ecuador en 2022?",o:["10%","15%","20%","25%"],a:2,e:"En 2022, el e-commerce representó el 20% del total de transacciones digitales en Ecuador (63.5 millones de 328 millones totales)."},
+{t:"Ecuador",q:"¿Qué categoría de servicio tuvo la mayor tasa de compra online en Ecuador en 2023?",o:["Pasajes aéreos (81%)","Recreación y entretenimiento (69%)","Educación en línea (85%)","Hoteles y alojamientos (84%)"],a:2,e:"Educación en línea lideró con un 85% en compra de servicios, reflejando la madurez del mercado digital ecuatoriano."},
+{t:"Omnicanalidad",q:"¿Cuál de las siguientes situaciones refleja una limitación del modelo Multichannel?",o:["Un cliente puede comprar por cualquier canal","Una cliente quiere devolver un pedido online en la tienda física, pero los sistemas no están conectados","Una tienda tiene app móvil y sitio web","El cliente recibe notificaciones por email"],a:1,e:"La falta de integración entre canales en el Multichannel impide acciones cross-channel como devoluciones entre canales distintos."}
+];
+
+let cur=0, correct=0, wrong=0, answered=new Array(Q.length).fill(null);
+const L=['A','B','C','D'];
+
+const icons={check:`<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`,x:`<svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,left:`<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>`,right:`<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>`,refresh:`<svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>`,eye:`<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`,trophy:`<svg viewBox="0 0 24 24"><polyline points="8 21 12 17 16 21"/><line x1="12" y1="17" x2="12" y2="11"/><path d="M7 11H5a2 2 0 0 1-2-2V5h4"/><path d="M17 11h2a2 2 0 0 0 2-2V5h-4"/><rect x="7" y="5" width="10" height="8" rx="1"/></svg>`};
+
+function updateStats(){
+  document.getElementById('st-cur').textContent=Math.min(cur+1,Q.length);
+  document.getElementById('st-ok').textContent=correct;
+  document.getElementById('st-fail').textContent=wrong;
+  const tot=correct+wrong;
+  document.getElementById('st-pct').textContent=tot>0?Math.round(correct/tot*100)+'%':'—';
+  const pct=Math.max(2,Math.round(cur/Q.length*100));
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-label').textContent='Pregunta '+(cur+1)+' de '+Q.length;
+  document.getElementById('prog-pct').textContent=pct+'%';
+}
+
+function render(){
+  if(cur>=Q.length){showResults();return;}
+  updateStats();
+  const q=Q[cur];
+  const done=answered[cur]!==null;
+  const opts=q.o.map((o,i)=>{
+    let cls='opt-btn';
+    if(done){
+      if(i===q.a) cls+=' reveal';
+      else if(i===answered[cur]&&i!==q.a) cls+=' wrong';
+    }
+    return `<button class="${cls}" onclick="choose(${i})" ${done?'disabled':''}>
+      <span class="opt-letter">${L[i]}</span>${o}
+    </button>`;
+  }).join('');
+  let fb='';
+  if(done){
+    const ok=answered[cur]===q.a;
+    fb=`<div class="feedback ${ok?'ok':'fail'}">
+      <span class="feedback-icon">${ok?icons.check:icons.x}</span>
+      <span><strong>${ok?'¡Correcto!':'Incorrecto.'}</strong> ${q.e}</span>
+    </div>`;
+  }
+  const nav=`<div class="nav-row">
+    ${cur>0?`<button class="btn" onclick="go(${cur-1})">${icons.left} Anterior</button>`:''}
+    ${done&&cur<Q.length-1?`<button class="btn primary" onclick="go(${cur+1})">Siguiente ${icons.right}</button>`:''}
+    ${done&&cur===Q.length-1?`<button class="btn primary" onclick="showResults()">${icons.trophy} Ver resultados</button>`:''}
+  </div>`;
+  document.getElementById('quiz-body').innerHTML=`
+    <div class="question-card">
+      <div class="q-meta">
+        <span class="topic-pill">${q.t}</span>
+        <span class="q-counter">${cur+1} / ${Q.length}</span>
+      </div>
+      <p class="q-text">${q.q}</p>
+      <div class="options">${opts}</div>
+      ${fb}
+    </div>
+    ${nav}`;
+}
+
+function choose(i){
+  if(answered[cur]!==null) return;
+  answered[cur]=i;
+  if(i===Q[cur].a) correct++; else wrong++;
+  render();
+}
+
+function go(n){ cur=n; render(); }
+
+function showResults(){
+  const total=Q.length;
+  const pct=Math.round(correct/total*100);
+  let msg,emoji;
+  if(pct>=90){msg='¡Dominas el contenido! Estás listo para el examen.';emoji='🏆';}
+  else if(pct>=70){msg='¡Muy bien! Repasa los temas donde fallaste.';emoji='👍';}
+  else if(pct>=50){msg='Vas por buen camino. Sigue repasando.';emoji='📚';}
+  else{msg='Necesitas repasar más. ¡Tú puedes lograrlo!';emoji='💪';}
+  document.getElementById('st-cur').textContent=total;
+  document.getElementById('st-pct').textContent=pct+'%';
+  document.getElementById('prog-fill').style.width='100%';
+  document.getElementById('prog-pct').textContent='100%';
+  document.getElementById('prog-label').textContent='Cuestionario completado';
+  const circ=2*Math.PI*54;
+  const offset=circ*(1-pct/100);
+  document.getElementById('quiz-body').innerHTML=`
+    <div class="results-wrap">
+      <div class="score-ring">
+        <svg width="130" height="130" viewBox="0 0 130 130">
+          <defs>
+            <linearGradient id="ring-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#7c3aed"/>
+              <stop offset="100%" stop-color="#a78bfa"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-bg" cx="65" cy="65" r="54" fill="none" stroke-width="8"/>
+          <circle class="ring-fill" cx="65" cy="65" r="54" fill="none" stroke-width="8"
+            stroke-dasharray="${circ.toFixed(1)}"
+            stroke-dashoffset="${offset.toFixed(1)}"/>
+        </svg>
+        <div class="score-text">
+          <div class="score-pct">${pct}%</div>
+          <div class="score-sub">${correct}/${total}</div>
+        </div>
+      </div>
+      <h3 class="results-title">${emoji} ${pct>=70?'¡Excelente trabajo!':'Sigue estudiando'}</h3>
+      <p class="results-msg">${msg}</p>
+      <div class="results-breakdown">
+        <div class="rb-item g"><strong>${correct}</strong>Correctas</div>
+        <div class="rb-item r"><strong>${wrong}</strong>Incorrectas</div>
+      </div>
+      <div class="results-nav">
+        <button class="btn primary" onclick="restart()">${icons.refresh} Reiniciar</button>
+        <button class="btn" onclick="reviewWrong()">${icons.eye} Ver errores</button>
+      </div>
+    </div>`;
+}
+
+function restart(){
+  cur=0;correct=0;wrong=0;answered.fill(null);render();
+}
+
+function reviewWrong(){
+  const w=answered.map((a,i)=>a!==null&&a!==Q[i].a?i:-1).filter(i=>i!==-1);
+  if(!w.length){alert('¡No tuviste ningún error!');return;}
+  cur=w[0];render();
+}
+
+render();
+</script>
+
+</body>
+</html>
